@@ -1,0 +1,68 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "biomni-plus"
+version = "0.1.0"
+description = "Biomni-Plus: High-Performance Biomedical AI Agent powered by ClawAgents backbone"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [
+    { name = "Xiaoqian Jiang", email = "xiaoqian.jiang@gmail.com" }
+]
+requires-python = ">=3.10"
+keywords = [
+    "biomedical",
+    "genomics",
+    "bioinformatics",
+    "drug-discovery",
+    "ai-agent",
+    "clawagents",
+    "biomni",
+    "llm",
+    "alzheimers-disease"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+    "clawagents>=6.20.0",
+    "pydantic>=2.0.0",
+    "pandas>=2.0.0",
+    "requests>=2.31.0",
+    "tabulate>=0.9.0",
+    "rich>=13.0.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+bio = [
+    "biopython>=1.80",
+    "scipy>=1.10.0",
+    "pyarrow>=14.0.0",
+    "datasets>=2.14.0",
+]
+all = [
+    "biomni-plus[bio]",
+    "openai>=1.0.0",
+    "google-genai>=0.1.0",
+    "anthropic>=0.18.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/x1jiang/biomni_plus"
+Repository = "https://github.com/x1jiang/biomni_plus"
+Issues = "https://github.com/x1jiang/biomni_plus/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["biomni_plus*"]
