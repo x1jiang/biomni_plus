@@ -72,3 +72,42 @@ AGGREGATE PERFORMANCE & RELIABILITY SUMMARY
    On the complex AD Risk query, Vanilla Biomni took over **129.49 seconds** due to unoptimized prompt expansion and redundant retrieval churn. Biomni-Plus completed the same reasoning in **20.41 seconds** (a **6.34× speedup**).
 3. **Execution Sandboxing vs In-Memory Shortcut**:
    On the bioinformatics coding task, Vanilla Biomni executed code in-process using `exec()` (12.34s). Biomni-Plus performed a realistic 4-step workflow: generating a script on disk, executing it in an isolated OS subprocess, observing stdout, and running PTRL self-learning (19.3s agent loop + 7.6s trajectory evaluation).
+
+---
+
+## 5. Public vs. Private Model (Biomni-Plus)
+
+Section 3 holds the public frontier model fixed and compares engines. This section holds the **Biomni-Plus engine** fixed and compares a public API model to a private 30B checkpoint.
+
+| | Public | Private |
+| :--- | :--- | :--- |
+| **Model** | `gpt-5.6-luna` | `Muse-Glimmer-30B` |
+| **Endpoint** | OpenAI `https://api.openai.com/v1` | OpenAI-compatible `http://xxx.xx.xx.xx/v1` |
+| **Harness** | Default Biomni-Plus | Compact local harness (knowledge-first, 15 domain tools) |
+
+### Aggregate (same 5 tasks)
+
+| Model | Endpoint | Mean Latency | Keyword Accuracy |
+| :--- | :--- | ---: | ---: |
+| `gpt-5.6-luna` (public) | `api.openai.com/v1` | 9.82s | 90.0% |
+| `Muse-Glimmer-30B` (private) | `xxx.xx.xx.xx/v1` | **7.93s** | 85.0% |
+
+### Task breakdown
+
+| Task | Public `gpt-5.6-luna` | Private `Muse-Glimmer-30B` |
+| :--- | :---: | :---: |
+| Genomics: UniProt P04637 / TP53 | 4.22s · 100% | 11.53s · 75% |
+| AD Risk: APOE4 Isoform & Chromosome | 18.92s · 100% | **5.64s · 100%** |
+| LabBench QA: RNA-targeting Cas Enzyme | 2.93s · 100% | 2.94s · 100% |
+| Chemoinformatics: Imatinib Molecular Formula | 7.39s · 75% | **6.16s · 75%** |
+| Bioinformatics Code: DNA Transcription & Translation | 15.63s · 75% | **13.40s · 75%** |
+
+Without the compact local harness, the private 30B model spent its budget on `ls` / `web_search` loops (mean 71s, 48% keyword accuracy). After the harness, it matches public-model latency and is within 5 points on the keyword scorer. Residual misses are lexical (`C₂₉H₃₁N₇O` vs `C29H31N7O`, “pro-apoptotic” vs “apoptosis”), not factual errors.
+
+Reproduce with a private OpenAI-compatible server (do not commit a real host):
+
+```bash
+export GLIMMER_30B_BACKEND=http://xxx.xx.xx.xx/v1
+export GLIMMER_30B_MODEL=Muse-Glimmer-30B
+python benchmark_glimmer_vs_luna.py --models glimmer_30b,luna --phase agent
+```

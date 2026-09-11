@@ -19,6 +19,14 @@ from clawagents.agent import ClawAgent, create_claw_agent
 from clawagents.providers.llm import LLMProvider
 from biomni_plus.tools_adapter import get_biomni_claw_tools
 from biomni_plus.context_layers import BiomniDataLakeLayer, BiomniKnowHowLayer, BiomniADLayer
+from biomni_plus.local_harness import (
+    apply_local_tool_surface,
+    is_compact_local_model,
+    knowledge_fallback_answer,
+    local_system_addendum,
+    needs_knowledge_fallback,
+    select_local_domain_tools,
+)
 
 
 class BiomniPlusAgent:
@@ -39,6 +47,7 @@ class BiomniPlusAgent:
         self.data_path = data_path
         self.commercial_mode = commercial_mode
         self.is_ad_specialized = is_ad_specialized
+        self.compact_local = False
         self.last_result: Optional[str] = None
         self.last_state: Any = None
         self.trajectory_history: List[Dict[str, Any]] = []
@@ -60,8 +69,15 @@ class BiomniPlusAgent:
     async def go_async(self, prompt: str) -> str:
         """Run a biomedical research task asynchronously."""
         state = await self.claw_agent.invoke(task=prompt)
+        result = state.result if hasattr(state, "result") else str(state)
+        if self.compact_local and needs_knowledge_fallback(state):
+            fallback = await knowledge_fallback_answer(self.claw_agent, prompt)
+            if fallback:
+                result = fallback
+                if hasattr(state, "result"):
+                    state.result = fallback
         self.last_state = state
-        self.last_result = state.result if hasattr(state, "result") else str(state)
+        self.last_result = result
         return self.last_result
 
     def go_stream(self, prompt: str) -> Generator[str, None, None]:
@@ -99,8 +115,13 @@ def create_biomni_plus_agent(
     if modules is None:
         modules = ["database", "literature", "genomics", "pharmacology", "biochemistry", "molecular_biology"]
 
+    resolved_base_url = base_url or os.getenv("OPENAI_BASE_URL")
+    compact_local = is_compact_local_model(model, resolved_base_url)
+
     # Bridge domain tools into ClawAgents
     domain_tools = get_biomni_claw_tools(modules=modules)
+    if compact_local:
+        domain_tools = select_local_domain_tools(domain_tools)
 
     # Build system instructions
     instruction_parts = [
@@ -110,39 +131,60 @@ def create_biomni_plus_agent(
         "Solve problems rigorously, retrieve ground-truth data, and provide precise, evidence-backed scientific conclusions.",
     ]
 
-    # Context layers
-    dl_layer = BiomniDataLakeLayer(data_path=data_path, commercial_mode=commercial_mode)
-    dl_text = dl_layer.inject(None)
-    if dl_text:
-        instruction_parts.append(dl_text)
+    if compact_local:
+        instruction_parts.append(local_system_addendum(is_ad_specialized=is_ad_specialized))
+    else:
+        # Context layers
+        dl_layer = BiomniDataLakeLayer(data_path=data_path, commercial_mode=commercial_mode)
+        dl_text = dl_layer.inject(None)
+        if dl_text:
+            instruction_parts.append(dl_text)
 
-    kh_layer = BiomniKnowHowLayer(commercial_mode=commercial_mode)
-    kh_text = kh_layer.inject(None)
-    if kh_text:
-        instruction_parts.append(kh_text)
+        kh_layer = BiomniKnowHowLayer(commercial_mode=commercial_mode)
+        kh_text = kh_layer.inject(None)
+        if kh_text:
+            instruction_parts.append(kh_text)
 
-    if is_ad_specialized:
-        ad_layer = BiomniADLayer()
-        ad_text = ad_layer.inject(None)
-        if ad_text:
-            instruction_parts.append(ad_text)
+        if is_ad_specialized:
+            ad_layer = BiomniADLayer()
+            ad_text = ad_layer.inject(None)
+            if ad_text:
+                instruction_parts.append(ad_text)
 
     system_instruction = "\n\n".join(instruction_parts)
 
-    claw_agent = create_claw_agent(
-        model=model,
-        api_key=api_key or os.getenv("OPENAI_API_KEY"),
-        base_url=base_url or os.getenv("OPENAI_BASE_URL"),
-        instruction=system_instruction,
-        tools=domain_tools,
-        streaming=streaming,
-        max_iterations=max_iterations,
-        workspace=data_path,
-    )
+    create_kwargs: Dict[str, Any] = {
+        "model": model,
+        "api_key": api_key or os.getenv("OPENAI_API_KEY"),
+        "base_url": resolved_base_url,
+        "instruction": system_instruction,
+        "tools": domain_tools,
+        "streaming": streaming,
+        "max_iterations": max_iterations,
+        "workspace": data_path,
+    }
+    if compact_local:
+        create_kwargs.update(
+            {
+                "wire_api": "chat_completions",
+                "max_tokens": 2048,
+                "temperature": 0.0,
+                "learn": False,
+                "rethink": True,
+                "tool_discovery": False,
+                "memory": [],
+            }
+        )
 
-    return BiomniPlusAgent(
+    claw_agent = create_claw_agent(**create_kwargs)
+    if compact_local:
+        apply_local_tool_surface(claw_agent, domain_tools)
+
+    agent = BiomniPlusAgent(
         claw_agent=claw_agent,
         data_path=data_path,
         commercial_mode=commercial_mode,
         is_ad_specialized=is_ad_specialized,
     )
+    agent.compact_local = compact_local
+    return agent

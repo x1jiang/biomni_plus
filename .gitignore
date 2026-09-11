@@ -55,6 +55,12 @@ runs/
 # Trajectories & Agent Memory
 .clawagents/
 
+# Local private-model bench dumps (may contain internal endpoints)
+glimmer_*_results.json
+glimmer_vs_luna_results.json
+glimmer_harness_v2_summary.md
+glimmer_vs_luna_summary.md
+
 
 # External Cloned Repositories (submodules / test workspaces)
 biomni/

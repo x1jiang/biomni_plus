@@ -52,6 +52,45 @@ Biomni-Plus (Claw)      12.76s        3.17x Speedup            0 (Native Tools) 
 
 > Full evaluation data and methodology are documented in [BENCHMARK.md](BENCHMARK.md).
 
+### Public vs. Private Model
+
+The engine comparison above holds the **public** frontier model fixed (`gpt-5.6-luna`). The same Biomni-Plus harness and 5-task suite were then re-run with a **private** OpenAI-compatible 30B checkpoint:
+
+| | Public model | Private model |
+| :--- | :--- | :--- |
+| **Model** | `gpt-5.6-luna` (OpenAI) | `Muse-Glimmer-30B` |
+| **Endpoint** | `https://api.openai.com/v1` | `http://xxx.xx.xx.xx/v1` |
+| **Engine** | Biomni-Plus (ClawAgents) | Biomni-Plus + compact local harness |
+
+A default coding tool surface (`ls` / `web_search` / 70+ assay tools) makes the 30B model thrash. The compact local harness (knowledge-first prompt, 15 biomedical tools, no filesystem exploration) brings it in line with the public model:
+
+```
+Public vs. Private on Biomni-Plus (same 5 biomedical tasks)
+═══════════════════════════════════════════════════════════════════════════════════════
+Model                         Endpoint                    Mean Latency   Keyword Acc.
+───────────────────────────────────────────────────────────────────────────────────────
+gpt-5.6-luna (public)         api.openai.com/v1               9.82s         90.0%
+Muse-Glimmer-30B (private)    xxx.xx.xx.xx/v1                 7.93s         85.0%
+═══════════════════════════════════════════════════════════════════════════════════════
+```
+
+| Benchmark Task | Public `gpt-5.6-luna` | Private `Muse-Glimmer-30B` `@ xxx.xx.xx.xx/v1` |
+| :--- | :---: | :---: |
+| **Genomics: UniProt P04637 / TP53** | 4.22s · 100% | 11.53s · 75% |
+| **AD Risk: APOE4 Isoform & Chromosome** | 18.92s · 100% | **5.64s · 100%** |
+| **LabBench QA: RNA-targeting Cas Enzyme** | 2.93s · 100% | 2.94s · 100% |
+| **Chemoinformatics: Imatinib Molecular Details** | 7.39s · 75% | **6.16s · 75%** |
+| **Bioinformatics Code: Transcription & Translation** | 15.63s · 75% | **13.40s · 75%** |
+| **Mean** | 9.82s · 90.0% | **7.93s · 85.0%** |
+
+Raw completion (no tools) on the same prompts: Glimmer **122 tok/s** and **110 ms** time-to-first-token vs Luna 68 tok/s and 820 ms. The leftover keyword gap is lexical (Unicode formulas, “pro-apoptotic” vs “apoptosis”), not missing facts.
+
+Set `GLIMMER_30B_BACKEND` to your private OpenAI-compatible host and run:
+
+```bash
+python benchmark_glimmer_vs_luna.py --models glimmer_30b,luna --phase agent
+```
+
 ---
 
 ## System Architecture
@@ -154,6 +193,14 @@ python benchmark_biomni_vs_claw.py
 ```
 
 This runs all 5 standardized biomedical benchmark tasks across Vanilla Biomni, Biomni-AD, and Biomni-Plus, printing the timing and keyword accuracy summary and saving full telemetry to `benchmark_results.json`.
+
+To compare a **public** frontier model with a **private** OpenAI-compatible 30B host (`http://xxx.xx.xx.xx/v1`):
+
+```bash
+export GLIMMER_30B_BACKEND=http://xxx.xx.xx.xx/v1
+export GLIMMER_30B_MODEL=Muse-Glimmer-30B
+python benchmark_glimmer_vs_luna.py --models glimmer_30b,luna --phase agent
+```
 
 ---
 
