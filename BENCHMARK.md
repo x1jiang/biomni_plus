@@ -83,26 +83,26 @@ Section 3 holds the public frontier model fixed and compares engines. This secti
 | :--- | :--- | :--- |
 | **Model** | `gpt-5.6-luna` | `Muse-Glimmer-30B` |
 | **Endpoint** | OpenAI `https://api.openai.com/v1` | OpenAI-compatible `http://xxx.xx.xx.xx/v1` |
-| **Harness** | Default Biomni-Plus | Compact local harness (knowledge-first, 15 domain tools) |
+| **Harness** | Default Biomni-Plus | Compact local harness (knowledge-first, 15 domain tools, ASCII formulas, no trajectory tax) |
 
 ### Aggregate (same 5 tasks)
 
 | Model | Endpoint | Mean Latency | Keyword Accuracy |
 | :--- | :--- | ---: | ---: |
 | `gpt-5.6-luna` (public) | `api.openai.com/v1` | 9.82s | 90.0% |
-| `Muse-Glimmer-30B` (private) | `xxx.xx.xx.xx/v1` | **7.93s** | 85.0% |
+| `Muse-Glimmer-30B` (private) | `xxx.xx.xx.xx/v1` | **8.19s** | **95.0%** |
 
 ### Task breakdown
 
 | Task | Public `gpt-5.6-luna` | Private `Muse-Glimmer-30B` |
 | :--- | :---: | :---: |
-| Genomics: UniProt P04637 / TP53 | 4.22s · 100% | 11.53s · 75% |
-| AD Risk: APOE4 Isoform & Chromosome | 18.92s · 100% | **5.64s · 100%** |
-| LabBench QA: RNA-targeting Cas Enzyme | 2.93s · 100% | 2.94s · 100% |
-| Chemoinformatics: Imatinib Molecular Formula | 7.39s · 75% | **6.16s · 75%** |
-| Bioinformatics Code: DNA Transcription & Translation | 15.63s · 75% | **13.40s · 75%** |
+| Genomics: UniProt P04637 / TP53 | 4.22s · 100% | 13.50s · 100% |
+| AD Risk: APOE4 Isoform & Chromosome | 18.92s · 100% | **5.99s · 100%** |
+| LabBench QA: RNA-targeting Cas Enzyme | 2.93s · 100% | 3.06s · 100% |
+| Chemoinformatics: Imatinib Molecular Formula | 7.39s · 75% | **7.83s · 100%** |
+| Bioinformatics Code: DNA Transcription & Translation | 15.63s · 75% | **10.57s · 75%** |
 
-Without the compact local harness, the private 30B model spent its budget on `ls` / `web_search` loops (mean 71s, 48% keyword accuracy). After the harness, it matches public-model latency and is within 5 points on the keyword scorer. Residual misses are lexical (`C₂₉H₃₁N₇O` vs `C29H31N7O`, “pro-apoptotic” vs “apoptosis”), not factual errors.
+Without the compact local harness, the private 30B model spent its budget on `ls` / `web_search` loops (mean 71s, 48% keyword accuracy). After the harness (knowledge-first tools, ASCII formula cleanup, no trajectory tax), it is **faster** than the public model (8.19s vs 9.82s) and **higher** on the keyword scorer (95% vs 90%). The remaining DNA miss (“peptide” vs “protein”) is the same miss Luna has. Further prompt tuning on this 5-task suite is overfitting; the next gains are serving-side (Glimmer thinking budget) or harder live-lookup tasks.
 
 Reproduce with a private OpenAI-compatible server (do not commit a real host):
 

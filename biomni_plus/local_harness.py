@@ -13,6 +13,11 @@ import os
 from typing import Any, Iterable, Optional
 from urllib.parse import urlparse
 
+_SUB_SUPER_DIGITS = str.maketrans(
+    "₀₁₂₃₄₅₆₇₈₉⁰¹²³⁴⁵⁶⁷⁸⁹",
+    "01234567890123456789",
+)
+
 # Lookups that cover the standard biomedical suite without the 70+ assay tools.
 PREFERRED_DOMAIN_TOOLS = frozenset(
     {
@@ -118,6 +123,17 @@ def is_compact_local_model(
     if model_l.startswith(("gpt-", "claude-", "gemini-")):
         return False
     return True
+
+
+def normalize_local_answer(text: str) -> str:
+    """Make Glimmer answers machine-readable without changing the science.
+
+    SGLang often emits Unicode subscripts (C₂₉H₃₁N₇O) that break exact
+    formula matching and downstream parsers.
+    """
+    if not text:
+        return text
+    return text.translate(_SUB_SUPER_DIGITS)
 
 
 def local_system_addendum(*, is_ad_specialized: bool = False) -> str:

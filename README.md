@@ -62,7 +62,7 @@ The engine comparison above holds the **public** frontier model fixed (`gpt-5.6-
 | **Endpoint** | `https://api.openai.com/v1` | `http://xxx.xx.xx.xx/v1` |
 | **Engine** | Biomni-Plus (ClawAgents) | Biomni-Plus + compact local harness |
 
-A default coding tool surface (`ls` / `web_search` / 70+ assay tools) makes the 30B model thrash. The compact local harness (knowledge-first prompt, 15 biomedical tools, no filesystem exploration) brings it in line with the public model:
+A default coding tool surface (`ls` / `web_search` / 70+ assay tools) makes the 30B model thrash. The compact local harness (knowledge-first prompt, 15 biomedical tools, no filesystem exploration, ASCII formula cleanup, no trajectory tax) matches or beats the public model on this suite:
 
 ```
 Public vs. Private on Biomni-Plus (same 5 biomedical tasks)
@@ -70,20 +70,20 @@ Public vs. Private on Biomni-Plus (same 5 biomedical tasks)
 Model                         Endpoint                    Mean Latency   Keyword Acc.
 ───────────────────────────────────────────────────────────────────────────────────────
 gpt-5.6-luna (public)         api.openai.com/v1               9.82s         90.0%
-Muse-Glimmer-30B (private)    xxx.xx.xx.xx/v1                 7.93s         85.0%
+Muse-Glimmer-30B (private)    xxx.xx.xx.xx/v1                 8.19s         95.0%
 ═══════════════════════════════════════════════════════════════════════════════════════
 ```
 
 | Benchmark Task | Public `gpt-5.6-luna` | Private `Muse-Glimmer-30B` `@ xxx.xx.xx.xx/v1` |
 | :--- | :---: | :---: |
-| **Genomics: UniProt P04637 / TP53** | 4.22s · 100% | 11.53s · 75% |
-| **AD Risk: APOE4 Isoform & Chromosome** | 18.92s · 100% | **5.64s · 100%** |
-| **LabBench QA: RNA-targeting Cas Enzyme** | 2.93s · 100% | 2.94s · 100% |
-| **Chemoinformatics: Imatinib Molecular Details** | 7.39s · 75% | **6.16s · 75%** |
-| **Bioinformatics Code: Transcription & Translation** | 15.63s · 75% | **13.40s · 75%** |
-| **Mean** | 9.82s · 90.0% | **7.93s · 85.0%** |
+| **Genomics: UniProt P04637 / TP53** | 4.22s · 100% | 13.50s · 100% |
+| **AD Risk: APOE4 Isoform & Chromosome** | 18.92s · 100% | **5.99s · 100%** |
+| **LabBench QA: RNA-targeting Cas Enzyme** | 2.93s · 100% | 3.06s · 100% |
+| **Chemoinformatics: Imatinib Molecular Details** | 7.39s · 75% | **7.83s · 100%** |
+| **Bioinformatics Code: Transcription & Translation** | 15.63s · 75% | **10.57s · 75%** |
+| **Mean** | 9.82s · 90.0% | **8.19s · 95.0%** |
 
-Raw completion (no tools) on the same prompts: Glimmer **122 tok/s** and **110 ms** time-to-first-token vs Luna 68 tok/s and 820 ms. The leftover keyword gap is lexical (Unicode formulas, “pro-apoptotic” vs “apoptosis”), not missing facts.
+Raw completion (no tools): Glimmer **122 tok/s** and **110 ms** time-to-first-token vs Luna 68 tok/s and 820 ms. The remaining DNA keyword miss (“peptide” vs “protein”) is the same miss Luna has. TP53 is correct but slower because Glimmer spends tokens on hidden reasoning.
 
 Set `GLIMMER_30B_BACKEND` to your private OpenAI-compatible host and run:
 

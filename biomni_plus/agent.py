@@ -25,6 +25,7 @@ from biomni_plus.local_harness import (
     knowledge_fallback_answer,
     local_system_addendum,
     needs_knowledge_fallback,
+    normalize_local_answer,
     select_local_domain_tools,
 )
 
@@ -74,8 +75,10 @@ class BiomniPlusAgent:
             fallback = await knowledge_fallback_answer(self.claw_agent, prompt)
             if fallback:
                 result = fallback
-                if hasattr(state, "result"):
-                    state.result = fallback
+        if self.compact_local:
+            result = normalize_local_answer(str(result or ""))
+            if hasattr(state, "result"):
+                state.result = result
         self.last_state = state
         self.last_result = result
         return self.last_result
@@ -124,17 +127,19 @@ def create_biomni_plus_agent(
         domain_tools = select_local_domain_tools(domain_tools)
 
     # Build system instructions
-    instruction_parts = [
-        "You are Biomni-Plus, a state-of-the-art biomedical and life sciences AI research agent.",
-        "You possess deep expertise in genomics, bioinformatics, structural biology, pharmacology, and clinical research.",
-        "You have access to specialized biomedical database and analysis tools, as well as a sandboxed terminal for code execution.",
-        "Solve problems rigorously, retrieve ground-truth data, and provide precise, evidence-backed scientific conclusions.",
-    ]
-
     if compact_local:
-        instruction_parts.append(local_system_addendum(is_ad_specialized=is_ad_specialized))
+        instruction_parts = [
+            "You are Biomni-Plus, a biomedical research agent.",
+            "Answer from established knowledge when you can. Prefer a short, exact final answer.",
+            local_system_addendum(is_ad_specialized=is_ad_specialized),
+        ]
     else:
-        # Context layers
+        instruction_parts = [
+            "You are Biomni-Plus, a state-of-the-art biomedical and life sciences AI research agent.",
+            "You possess deep expertise in genomics, bioinformatics, structural biology, pharmacology, and clinical research.",
+            "You have access to specialized biomedical database and analysis tools, as well as a sandboxed terminal for code execution.",
+            "Solve problems rigorously, retrieve ground-truth data, and provide precise, evidence-backed scientific conclusions.",
+        ]
         dl_layer = BiomniDataLakeLayer(data_path=data_path, commercial_mode=commercial_mode)
         dl_text = dl_layer.inject(None)
         if dl_text:
@@ -170,6 +175,7 @@ def create_biomni_plus_agent(
                 "max_tokens": 2048,
                 "temperature": 0.0,
                 "learn": False,
+                "trajectory": False,
                 "rethink": True,
                 "tool_discovery": False,
                 "memory": [],

@@ -10,6 +10,7 @@ from biomni_plus.local_harness import (
     local_active_tool_names,
     local_system_addendum,
     needs_knowledge_fallback,
+    normalize_local_answer,
     select_local_domain_tools,
 )
 
@@ -88,6 +89,13 @@ def test_local_active_names_include_code_tools():
     names = local_active_tool_names([SimpleNamespace(name="query_uniprot")])
     assert ALWAYS_ON_TOOLS <= names
     assert not (EXPLORATION_TOOLS & names)
+
+
+def test_normalize_local_answer_ascii_formulas():
+    raw = "Imatinib formula C₂₉H₃₁N₇O, MW 493.60"
+    out = normalize_local_answer(raw)
+    assert "C29H31N7O" in out
+    assert "C₂₉" not in out
 
 
 def test_needs_knowledge_fallback():
