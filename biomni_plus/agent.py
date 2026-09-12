@@ -19,9 +19,21 @@ from clawagents.agent import ClawAgent, create_claw_agent
 from clawagents.providers.llm import LLMProvider
 from biomni_plus.tools_adapter import get_biomni_claw_tools
 from biomni_plus.context_layers import BiomniDataLakeLayer, BiomniKnowHowLayer, BiomniADLayer
+from biomni_plus.gemma_harness import (
+    GEMMA_OPERATING_RULES,
+    apply_gemma_tool_surface,
+    attach_gemma_tools,
+    bind_gemma_harness_profile,
+    cap_gemma_iterations,
+    close_multiple_choice,
+    merge_tool_cards,
+    select_gemma_domain_tools,
+)
+from biomni_plus.gemma_tools import clear_tool_cards
 from biomni_plus.local_harness import (
     apply_local_tool_surface,
     is_compact_local_model,
+    is_gemma_local_model,
     knowledge_fallback_answer,
     local_system_addendum,
     needs_knowledge_fallback,
@@ -49,6 +61,7 @@ class BiomniPlusAgent:
         self.commercial_mode = commercial_mode
         self.is_ad_specialized = is_ad_specialized
         self.compact_local = False
+        self.gemma_local = False
         self.last_result: Optional[str] = None
         self.last_state: Any = None
         self.trajectory_history: List[Dict[str, Any]] = []
@@ -69,6 +82,8 @@ class BiomniPlusAgent:
 
     async def go_async(self, prompt: str) -> str:
         """Run a biomedical research task asynchronously."""
+        if self.gemma_local:
+            clear_tool_cards()
         state = await self.claw_agent.invoke(task=prompt)
         result = state.result if hasattr(state, "result") else str(state)
         if self.compact_local and needs_knowledge_fallback(state):
@@ -77,6 +92,8 @@ class BiomniPlusAgent:
                 result = fallback
         if self.compact_local:
             result = normalize_local_answer(str(result or ""))
+            if self.gemma_local:
+                result = close_multiple_choice(prompt, merge_tool_cards(result))
             if hasattr(state, "result"):
                 state.result = result
         self.last_state = state
@@ -120,11 +137,17 @@ def create_biomni_plus_agent(
 
     resolved_base_url = base_url or os.getenv("OPENAI_BASE_URL")
     compact_local = is_compact_local_model(model, resolved_base_url)
+    gemma_local = compact_local and is_gemma_local_model(model)
+    if gemma_local:
+        bind_gemma_harness_profile(model)
+        max_iterations = cap_gemma_iterations(max_iterations)
 
     # Bridge domain tools into ClawAgents
     domain_tools = get_biomni_claw_tools(modules=modules)
     if compact_local:
         domain_tools = select_local_domain_tools(domain_tools)
+    if gemma_local:
+        domain_tools = select_gemma_domain_tools(attach_gemma_tools(domain_tools))
 
     # Build system instructions
     if compact_local:
@@ -133,6 +156,8 @@ def create_biomni_plus_agent(
             "Answer from established knowledge when you can. Prefer a short, exact final answer.",
             local_system_addendum(is_ad_specialized=is_ad_specialized),
         ]
+        if gemma_local:
+            instruction_parts.append(GEMMA_OPERATING_RULES)
     else:
         instruction_parts = [
             "You are Biomni-Plus, a state-of-the-art biomedical and life sciences AI research agent.",
@@ -183,7 +208,9 @@ def create_biomni_plus_agent(
         )
 
     claw_agent = create_claw_agent(**create_kwargs)
-    if compact_local:
+    if gemma_local:
+        apply_gemma_tool_surface(claw_agent, domain_tools)
+    elif compact_local:
         apply_local_tool_surface(claw_agent, domain_tools)
 
     agent = BiomniPlusAgent(
@@ -193,4 +220,5 @@ def create_biomni_plus_agent(
         is_ad_specialized=is_ad_specialized,
     )
     agent.compact_local = compact_local
+    agent.gemma_local = gemma_local
     return agent

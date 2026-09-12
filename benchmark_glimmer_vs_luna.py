@@ -120,6 +120,15 @@ MODELS = [
         "omit_temperature": True,
         "temperature": None,
     },
+    {
+        "id": "gemma4_v2",
+        "label": "Gemma4-12B-v2-Q4_K_M",
+        "model": os.getenv("GEMMA_AGENTIC_MODEL", "gemma4-agentic-v2"),
+        "base_url": os.getenv("GEMMA_AGENTIC_BASE_URL", "http://127.0.0.1:18080/v1"),
+        "api_key": os.getenv("GEMMA_AGENTIC_API_KEY", "not-needed"),
+        "omit_temperature": False,
+        "temperature": 0,
+    },
 ]
 
 
@@ -321,14 +330,17 @@ def write_outputs(payload: Dict[str, Any], table_raw: str, table_agent: str, tab
     json_path = root_dir / f"{OUTPUT_PREFIX}_results.json"
     md_path = root_dir / f"{OUTPUT_PREFIX}_summary.md"
     json_path.write_text(json.dumps(payload, indent=2, default=str))
+    labels = ", ".join(spec["label"] for spec in MODELS)
     md_path.write_text(
         "\n".join(
             [
-                "# Muse-Glimmer-30B vs gpt-5.6-luna",
+                f"# {labels}",
                 "",
                 f"- Glimmer endpoint: `{published_endpoint(GLIMMER_BASE)}`",
                 f"- Glimmer model: `{GLIMMER_MODEL}`",
                 f"- Luna model: `{LUNA_MODEL}`",
+                f"- Gemma endpoint: `{os.getenv('GEMMA_AGENTIC_BASE_URL', 'http://127.0.0.1:18080/v1')}`",
+                f"- Gemma model: `{os.getenv('GEMMA_AGENTIC_MODEL', 'gemma4-agentic-v2')}`",
                 f"- Date: {time.strftime('%Y-%m-%d %H:%M %Z')}",
                 "",
                 "## Aggregate",
@@ -356,7 +368,7 @@ def main() -> None:
     parser.add_argument(
         "--models",
         default="glimmer_30b,luna",
-        help="Comma-separated model ids: glimmer_30b,luna",
+        help="Comma-separated model ids: glimmer_30b,luna,gemma4_v2",
     )
     parser.add_argument(
         "--phase",
@@ -386,9 +398,9 @@ def _run_benchmark(*, run_raw: bool, run_agent: bool) -> None:
         raise SystemExit("OPENAI_API_KEY is required to run gpt-5.6-luna.")
 
     print("=" * 88)
-    print("Muse-Glimmer-30B vs gpt-5.6-luna")
-    print(f"Glimmer: {GLIMMER_MODEL} @ {GLIMMER_BASE}")
-    print(f"Luna:    {LUNA_MODEL} @ OpenAI")
+    print("Biomni-Plus model benchmark")
+    for spec in MODELS:
+        print(f"{spec['id']}: {spec['label']} @ {spec['base_url'] or 'OpenAI'}")
     print("=" * 88)
 
     raw_rows: List[List[Any]] = []

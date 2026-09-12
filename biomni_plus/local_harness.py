@@ -114,6 +114,14 @@ def is_compact_local_model(
             return False
         return True
 
+
+def is_gemma_local_model(model: Optional[str] = None) -> bool:
+    """True for Gemma checkpoints that need the stricter Biomni loop guard."""
+    model_l = (model or "").strip().lower()
+    if not model_l or "gemma" not in model_l:
+        return False
+    return not model_l.startswith(("gpt-", "claude-", "gemini-"))
+
     url = (base_url or os.getenv("OPENAI_BASE_URL") or "").strip()
     if not url:
         return False
