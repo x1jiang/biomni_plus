@@ -1,0 +1,369 @@
+{
+  "meta": {
+    "spark_endpoint": "http://xxx.xx.xx.xx/v1",
+    "spark_model": "meta-models/Muse-Spark-Open-816B-A42B",
+    "timestamp": "2026-10-16T22:31:03-0500"
+  },
+  "tasks": [
+    {
+      "id": "hard_cyp2c19_clopidogrel",
+      "name": "Pharmacogenomics: CYP2C19*2/*3 & Clopidogrel Bioactivation",
+      "models": {
+        "muse_spark": {
+          "success": true,
+          "elapsed": 79.79435801506042,
+          "content": "As a biomedical information resource - not direct medical advice for this specific patient, which requires the treating cardiologist/pharmacist:\n\n**(1) Metabolizer phenotype and allele function:**\nCYP2C19 *2/*3 = **Poor Metabolizer**. Both *2 and *3 are **loss-of-function / no-function** alleles. Diplotype contains two no-function alleles, resulting in absent CYP2C19 activity.\n\n**(2) Why clopidogrel is ineffective:**\nClopidogrel is an **inactive prodrug** that requires **two-step hepatic biotransformation, primarily by CYP2C19**, to generate its **active thiol metabolite (R-130964)**. This active thiol metabolite irreversibly inhibits the platelet P2Y12 receptor. In *2/*3 poor metabolizers, conversion to the active thiol metabolite is markedly reduced, resulting in decreased platelet inhibition and increased risk of adverse cardiovascular events.\n\n**(3) CPIC-recommended alternatives:**\nPer Clinical Pharmacogenetics Implementation Consortium (CPIC) guidelines for CYP2C19 poor metabolizers undergoing PCI for acute coronary syndrome, avoid clopidogrel and use:\n1. **Prasugrel**\n2. **Ticagrelor**\n\nBoth do not depend on CYP2C19 for activation - prasugrel activation is primarily via CYP3A4/C",
+          "scored_text": "As a biomedical information resource - not direct medical advice for this specific patient, which requires the treating cardiologist/pharmacist:\n\n**(1) Metabolizer phenotype and allele function:**\nCYP2C19 *2/*3 = **Poor Metabolizer**. Both *2 and *3 are **loss-of-function / no-function** alleles. Diplotype contains two no-function alleles, resulting in absent CYP2C19 activity.\n\n**(2) Why clopidogrel is ineffective:**\nClopidogrel is an **inactive prodrug** that requires **two-step hepatic biotransformation, primarily by CYP2C19**, to generate its **active thiol metabolite (R-130964)**. This active thiol metabolite irreversibly inhibits the platelet P2Y12 receptor. In *2/*3 poor metabolizers, conversion to the active thiol metabolite is markedly reduced, resulting in decreased platelet inhibition and increased risk of adverse cardiovascular events.\n\n**(3) CPIC-recommended alternatives:**\nPer Clinical Pharmacogenetics Implementation Consortium (CPIC) guidelines for CYP2C19 poor metabolizers undergoing PCI for acute coronary syndrome, avoid clopidogrel and use:\n1. **Prasugrel**\n2. **Ticagrelor**\n\nBoth do not depend on CYP2C19 for activation - prasugrel activation is primarily via CYP3A4/C",
+          "completion_tokens": 768,
+          "tok_per_sec": 9.624740634607868,
+          "error": null,
+          "score": 1.0,
+          "hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "luna": {
+          "success": true,
+          "elapsed": 4.130385875701904,
+          "content": "1. **Phenotype:** CYP2C19 **poor metabolizer (PM)**. Both **\\*2 and \\*3 are no-function (loss-of-function) alleles**.\n\n2. **Clopidogrel is a prodrug** requiring hepatic, CYP-mediated bioactivation\u2014particularly CYP2C19\u2014to form its active thiol metabolite, which irreversibly inhibits the platelet P2Y12 receptor. With two no-function alleles, activation and active-metabolite exposure are markedly reduced, making clopidogrel ineffective.\n\n3. CPIC recommends **prasugrel or ticagrelor** (provided there are no contraindications).",
+          "scored_text": "1. **Phenotype:** CYP2C19 **poor metabolizer (PM)**. Both **\\*2 and \\*3 are no-function (loss-of-function) alleles**.\n\n2. **Clopidogrel is a prodrug** requiring hepatic, CYP-mediated bioactivation\u2014particularly CYP2C19\u2014to form its active thiol metabolite, which irreversibly inhibits the platelet P2Y12 receptor. With two no-function alleles, activation and active-metabolite exposure are markedly reduced, making clopidogrel ineffective.\n\n3. CPIC recommends **prasugrel or ticagrelor** (provided there are no contraindications).",
+          "completion_tokens": 306,
+          "tok_per_sec": 74.08508773965322,
+          "error": null,
+          "score": 1.0,
+          "hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "gpt4o_mini": {
+          "success": true,
+          "elapsed": 1.4749031066894531,
+          "content": "(1) The metabolizer phenotype for a patient with CYP2C19*2/*3 is classified as a \"poor metabolizer.\" Both alleles (*2 and *3) are associated with reduced or absent enzyme function.\n\n(2) Clopidogrel is ineffective in this genotype because it is a prodrug that requires hepatic conversion to its active thiol metabolite by the CYP2C19 enzyme. In individuals with the CYP2C19*2/*3 genotype, the reduced enzyme activity leads to insufficient levels of the active metabolite, resulting in inadequate platelet inhibition.\n\n(3) The two alternative P2Y12 receptor inhibitors recommended by CPIC guidelines are prasugrel and ticagrelor.",
+          "scored_text": "(1) The metabolizer phenotype for a patient with CYP2C19*2/*3 is classified as a \"poor metabolizer.\" Both alleles (*2 and *3) are associated with reduced or absent enzyme function.\n\n(2) Clopidogrel is ineffective in this genotype because it is a prodrug that requires hepatic conversion to its active thiol metabolite by the CYP2C19 enzyme. In individuals with the CYP2C19*2/*3 genotype, the reduced enzyme activity leads to insufficient levels of the active metabolite, resulting in inadequate platelet inhibition.\n\n(3) The two alternative P2Y12 receptor inhibitors recommended by CPIC guidelines are prasugrel and ticagrelor.",
+          "completion_tokens": 144,
+          "tok_per_sec": 97.63353222790369,
+          "error": null,
+          "score": 0.8333333333333334,
+          "hits": [
+            true,
+            false,
+            true,
+            true,
+            true,
+            true
+          ]
+        }
+      }
+    },
+    {
+      "id": "hard_bcr_abl_t315i",
+      "name": "Structural Oncology: BCR-ABL1 T315I Gatekeeper & STAMP Inhibition",
+      "models": {
+        "muse_spark": {
+          "success": true,
+          "elapsed": 98.76307892799377,
+          "content": "In CML BCR-ABL1:\n\n**(1) T315I gatekeeper effect:**\n* **Lost bond:** Hydrogen bond (H-bond) between the side-chain hydroxyl (-OH) of Thr315 and first/second-generation TKIs (imatinib/dasatinib/nilotinib/bosutinib) in the ATP-binding site.\n* **Steric effect:** Ile315 lacks the -OH and has a bulkier branched isobutyl side chain. This causes steric clash/hindrance, blocks access to the hydrophobic pocket behind the gatekeeper residue, and prevents drug binding while retaining ATP binding/kinase activity.\n\n**(2) Agents active against T315I:**\n* **Third-generation ATP-competitive TKI:** **Ponatinib** - designed with a carbon-carbon triple bond (ethynyl linker) to avoid steric clash with Ile315.\n* **Allosteric STAMP inhibitor:** **Asciminib (ABL001)** - Specifically Targeting the ABL Myristoyl Pocket. It binds the **myristoyl / myristate binding pocket** in the C-lobe of the ABL1 kinase domain, distant from the ATP site, restoring autoinhibition.\n\n*For educational purposes only, not medical advice. Consult a qualified healthcare professional for treatment decisions.*",
+          "scored_text": "In CML BCR-ABL1:\n\n**(1) T315I gatekeeper effect:**\n* **Lost bond:** Hydrogen bond (H-bond) between the side-chain hydroxyl (-OH) of Thr315 and first/second-generation TKIs (imatinib/dasatinib/nilotinib/bosutinib) in the ATP-binding site.\n* **Steric effect:** Ile315 lacks the -OH and has a bulkier branched isobutyl side chain. This causes steric clash/hindrance, blocks access to the hydrophobic pocket behind the gatekeeper residue, and prevents drug binding while retaining ATP binding/kinase activity.\n\n**(2) Agents active against T315I:**\n* **Third-generation ATP-competitive TKI:** **Ponatinib** - designed with a carbon-carbon triple bond (ethynyl linker) to avoid steric clash with Ile315.\n* **Allosteric STAMP inhibitor:** **Asciminib (ABL001)** - Specifically Targeting the ABL Myristoyl Pocket. It binds the **myristoyl / myristate binding pocket** in the C-lobe of the ABL1 kinase domain, distant from the ATP site, restoring autoinhibition.\n\n*For educational purposes only, not medical advice. Consult a qualified healthcare professional for treatment decisions.*",
+          "completion_tokens": 978,
+          "tok_per_sec": 9.902485935184753,
+          "error": null,
+          "score": 1.0,
+          "hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "luna": {
+          "success": true,
+          "elapsed": 4.048503160476685,
+          "content": "1. The **Thr315 hydroxyl\u2013inhibitor hydrogen bond** is lost. Substitution by **Ile315** introduces a bulkier, hydrophobic side chain that causes **steric clash and occludes the ATP-binding pocket**.\n\n2. **Ponatinib** is the third-generation ATP-competitive TKI. **Asciminib (ABL001)** is the allosteric STAMP inhibitor; it binds the **C-terminal ABL myristoyl-binding pocket** (the pocket normally occupied by the regulatory myristate), not the ATP site.",
+          "scored_text": "1. The **Thr315 hydroxyl\u2013inhibitor hydrogen bond** is lost. Substitution by **Ile315** introduces a bulkier, hydrophobic side chain that causes **steric clash and occludes the ATP-binding pocket**.\n\n2. **Ponatinib** is the third-generation ATP-competitive TKI. **Asciminib (ABL001)** is the allosteric STAMP inhibitor; it binds the **C-terminal ABL myristoyl-binding pocket** (the pocket normally occupied by the regulatory myristate), not the ATP site.",
+          "completion_tokens": 418,
+          "tok_per_sec": 103.24803598542412,
+          "error": null,
+          "score": 1.0,
+          "hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "gpt4o_mini": {
+          "success": true,
+          "elapsed": 1.6192777156829834,
+          "content": "(1) The non-covalent bond lost with the hydroxyl group of Thr315 is a hydrogen bond. The steric effect introduced by Ile315 in the ATP-binding pocket is that it creates a bulkier side chain, which can hinder the binding of ATP-competitive inhibitors due to spatial constraints.\n\n(2) The third-generation ATP-competitive TKI that overcomes T315I is **ponatinib**. The allosteric STAMP inhibitor is **asciminib**, which binds to the **allosteric pocket adjacent to the ABL myristoyl pocket**.",
+          "scored_text": "(1) The non-covalent bond lost with the hydroxyl group of Thr315 is a hydrogen bond. The steric effect introduced by Ile315 in the ATP-binding pocket is that it creates a bulkier side chain, which can hinder the binding of ATP-competitive inhibitors due to spatial constraints.\n\n(2) The third-generation ATP-competitive TKI that overcomes T315I is **ponatinib**. The allosteric STAMP inhibitor is **asciminib**, which binds to the **allosteric pocket adjacent to the ABL myristoyl pocket**.",
+          "completion_tokens": 119,
+          "tok_per_sec": 73.48955577382713,
+          "error": null,
+          "score": 1.0,
+          "hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        }
+      }
+    },
+    {
+      "id": "hard_ad_christchurch_reelin",
+      "name": "AD Protective Genetics: APOE3 Christchurch & RELN-COLBOS Epistasis",
+      "models": {
+        "muse_spark": {
+          "success": true,
+          "elapsed": 72.74644899368286,
+          "content": "(1) **APOE3 Christchurch:** p.Arg136Ser (R136S) in mature APOE3 protein = p.Arg154Ser (R154S) with 18-aa signal peptide, c.460C>A; **RELN-COLBOS:** p.His3447Arg (H3447R), c.10340A>G [H3448R in alternative RELN isoform numbering] - gain-of-function variant in C-terminal region.\n\n(2) **Heparin / Heparan Sulfate Proteoglycans (HSPGs)** - APOE3-R136S shows markedly reduced binding affinity for heparin and cell-surface HSPGs, impairing HSPG-mediated tau uptake/spread and APOE-heparin interaction.\n\n(3) **Adaptor: Disabled-1 (Dab1)** - Reelin binding to ApoER2/VLDLR induces tyrosine phosphorylation of Dab1 \u2192 recruitment/activation of **PI3K/Akt** \u2192 inhibitory phosphorylation of **Glycogen Synthase Kinase-3 beta (GSK3\u03b2) at Ser9** \u2192 reduced tau phosphorylation.",
+          "scored_text": "(1) **APOE3 Christchurch:** p.Arg136Ser (R136S) in mature APOE3 protein = p.Arg154Ser (R154S) with 18-aa signal peptide, c.460C>A; **RELN-COLBOS:** p.His3447Arg (H3447R), c.10340A>G [H3448R in alternative RELN isoform numbering] - gain-of-function variant in C-terminal region.\n\n(2) **Heparin / Heparan Sulfate Proteoglycans (HSPGs)** - APOE3-R136S shows markedly reduced binding affinity for heparin and cell-surface HSPGs, impairing HSPG-mediated tau uptake/spread and APOE-heparin interaction.\n\n(3) **Adaptor: Disabled-1 (Dab1)** - Reelin binding to ApoER2/VLDLR induces tyrosine phosphorylation of Dab1 \u2192 recruitment/activation of **PI3K/Akt** \u2192 inhibitory phosphorylation of **Glycogen Synthase Kinase-3 beta (GSK3\u03b2) at Ser9** \u2192 reduced tau phosphorylation.",
+          "completion_tokens": 721,
+          "tok_per_sec": 9.911136694281945,
+          "error": null,
+          "score": 1.0,
+          "hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "luna": {
+          "success": true,
+          "elapsed": 13.153074979782104,
+          "content": "",
+          "scored_text": "",
+          "completion_tokens": 1536,
+          "tok_per_sec": 116.77877624517622,
+          "error": null,
+          "score": 0.0,
+          "hits": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        "gpt4o_mini": {
+          "success": true,
+          "elapsed": 1.7606301307678223,
+          "content": "(1) The exact amino-acid substitutions are: APOE3 Christchurch has a substitution of cysteine (C) for arginine (R) at position 136 (R136C), and RELN-COLBOS has a substitution of leucine (L) for proline (P) at position 12 (P12L).\n\n(2) The cell-surface glycosaminoglycan/proteoglycan family that shows markedly reduced binding to APOE3 Christchurch is the heparan sulfate proteoglycans.\n\n(3) The intracellular adaptor protein is Disabled-1 (Dab1), and the downstream tau kinase linked to Reelin receptor signaling is glycogen synthase kinase 3 beta (GSK3\u03b2).",
+          "scored_text": "(1) The exact amino-acid substitutions are: APOE3 Christchurch has a substitution of cysteine (C) for arginine (R) at position 136 (R136C), and RELN-COLBOS has a substitution of leucine (L) for proline (P) at position 12 (P12L).\n\n(2) The cell-surface glycosaminoglycan/proteoglycan family that shows markedly reduced binding to APOE3 Christchurch is the heparan sulfate proteoglycans.\n\n(3) The intracellular adaptor protein is Disabled-1 (Dab1), and the downstream tau kinase linked to Reelin receptor signaling is glycogen synthase kinase 3 beta (GSK3\u03b2).",
+          "completion_tokens": 150,
+          "tok_per_sec": 85.19676982614402,
+          "error": null,
+          "score": 0.6666666666666666,
+          "hits": [
+            false,
+            false,
+            true,
+            true,
+            true,
+            true
+          ]
+        }
+      }
+    },
+    {
+      "id": "hard_frameshift_orf",
+      "name": "Coding Frameshift Math: Single-Nucleotide Deletion & Premature Stop",
+      "models": {
+        "muse_spark": {
+          "success": true,
+          "elapsed": 109.49945497512817,
+          "content": "Wild-type coding DNA: `5'-ATG GCC CTG CTG AAC CGC TAA-3'`\nmRNA: `5'-AUG GCC CUG CUG AAC CGC UAA-3'`\n\n1. Wild-type translation before `TAA/UAA` stop:\n\n> `ATG = M, GCC = A, CTG = L, CTG = L, AAC = N, CGC = R`\n> **6-aa: M-A-L-L-N-R = MALLNR**\n\n2. `c.10delC` - deletion of nt 10 `C` [1st base of codon 4 `CTG` (10-12)]:\n\nOriginal 21-nt: `ATGGCCCTGCTGAACCGCTAA`\nMutant 20-nt: `ATGGCCCTGTGAACCGCTAA`\n`ATG GCC CTG TGA ACC GCT AA`\n\nNew reading frame from codon 4:\n\n> **4th codon DNA: TGA**\n> **4th codon mRNA: UGA = STOP / Termination codon**\n\nTranslation terminates at codon 4:\n\n`ATG = M, GCC = A, CTG = L, TGA = Stop`\n\n> **Truncated peptide: M-A-L = MAL, 3-aa before premature stop, `MAL*` / `MALL*` in frame-shifted notation.**",
+          "scored_text": "Wild-type coding DNA: `5'-ATG GCC CTG CTG AAC CGC TAA-3'`\nmRNA: `5'-AUG GCC CUG CUG AAC CGC UAA-3'`\n\n1. Wild-type translation before `TAA/UAA` stop:\n\n> `ATG = M, GCC = A, CTG = L, CTG = L, AAC = N, CGC = R`\n> **6-aa: M-A-L-L-N-R = MALLNR**\n\n2. `c.10delC` - deletion of nt 10 `C` [1st base of codon 4 `CTG` (10-12)]:\n\nOriginal 21-nt: `ATGGCCCTGCTGAACCGCTAA`\nMutant 20-nt: `ATGGCCCTGTGAACCGCTAA`\n`ATG GCC CTG TGA ACC GCT AA`\n\nNew reading frame from codon 4:\n\n> **4th codon DNA: TGA**\n> **4th codon mRNA: UGA = STOP / Termination codon**\n\nTranslation terminates at codon 4:\n\n`ATG = M, GCC = A, CTG = L, TGA = Stop`\n\n> **Truncated peptide: M-A-L = MAL, 3-aa before premature stop, `MAL*` / `MALL*` in frame-shifted notation.**",
+          "completion_tokens": 1084,
+          "tok_per_sec": 9.899592653189195,
+          "error": null,
+          "score": 1.0,
+          "hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "luna": {
+          "success": true,
+          "elapsed": 6.120706081390381,
+          "content": "1. **Wild-type codons:** ATG\u2013GCC\u2013CTG\u2013CTG\u2013AAC\u2013CGC\u2013TAA  \n   **Peptide:** **MALLNR**\n\n2. Deleting nucleotide 10 (the first **C** of the fourth codon, CTG) shifts the reading frame:\n\n   - New fourth DNA codon: **5\u2032-TGA-3\u2032**\n   - Corresponding mRNA codon: **5\u2032-UGA-3\u2032**\n   - Meaning: **termination (stop) codon; encodes no amino acid**\n\n   The resulting truncated peptide is **MAL**.",
+          "scored_text": "1. **Wild-type codons:** ATG\u2013GCC\u2013CTG\u2013CTG\u2013AAC\u2013CGC\u2013TAA  \n   **Peptide:** **MALLNR**\n\n2. Deleting nucleotide 10 (the first **C** of the fourth codon, CTG) shifts the reading frame:\n\n   - New fourth DNA codon: **5\u2032-TGA-3\u2032**\n   - Corresponding mRNA codon: **5\u2032-UGA-3\u2032**\n   - Meaning: **termination (stop) codon; encodes no amino acid**\n\n   The resulting truncated peptide is **MAL**.",
+          "completion_tokens": 652,
+          "tok_per_sec": 106.52365778228834,
+          "error": null,
+          "score": 1.0,
+          "hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "gpt4o_mini": {
+          "success": true,
+          "elapsed": 3.035384178161621,
+          "content": "(1) The wild-type coding DNA sequence is 5'-ATGGCCCTGCTGAACCGCTAA-3'. To determine the peptide sequence, we first translate the DNA sequence into its corresponding mRNA sequence, which is 5'-AUGGCCCUGCUGAACCGCUA-3'. The codons are as follows:\n\n- AUG - Methionine (M)\n- GCC - Alanine (A)\n- CUG - Leucine (L)\n- UGA - Stop (not included in the peptide)\n\nThus, the wild-type 6-amino-acid peptide sequence (1-letter code) is **MAL**.\n\n(2) If a single-nucleotide deletion removes the 10th nucleotide (c.10delC), the original sequence is altered. The original sequence is:\n\n5'-ATGGCCCTGCTGAACCGCTAA-3'\n\nRemoving the 'C' at position 10 results in the following sequence:\n\n5'-ATGGCCCTGCTGAACGCTAA-3'\n\nNow, we need to identify the new 4th codon. The codons are now:\n\n- AUG - Methionine (M)\n- GCC - Alanine (A)\n- CCG - Proline (P)\n- UAA - Stop (not included in the peptide)\n\nThe new 4th codon in DNA is **5'-CGC-3'** (which corresponds to the mRNA codon **5'-GCG-3'**). The codon CGC encodes **Arginine (R)**.\n\nThe resulting truncated peptide sequence (1-letter code) is now:\n\n- M (Methionine)\n- A (Alanine)\n- P (Proline)\n\nThus, the resulting truncated peptide sequence is **MAPR**.",
+          "scored_text": "(1) The wild-type coding DNA sequence is 5'-ATGGCCCTGCTGAACCGCTAA-3'. To determine the peptide sequence, we first translate the DNA sequence into its corresponding mRNA sequence, which is 5'-AUGGCCCUGCUGAACCGCUA-3'. The codons are as follows:\n\n- AUG - Methionine (M)\n- GCC - Alanine (A)\n- CUG - Leucine (L)\n- UGA - Stop (not included in the peptide)\n\nThus, the wild-type 6-amino-acid peptide sequence (1-letter code) is **MAL**.\n\n(2) If a single-nucleotide deletion removes the 10th nucleotide (c.10delC), the original sequence is altered. The original sequence is:\n\n5'-ATGGCCCTGCTGAACCGCTAA-3'\n\nRemoving the 'C' at position 10 results in the following sequence:\n\n5'-ATGGCCCTGCTGAACGCTAA-3'\n\nNow, we need to identify the new 4th codon. The codons are now:\n\n- AUG - Methionine (M)\n- GCC - Alanine (A)\n- CCG - Proline (P)\n- UAA - Stop (not included in the peptide)\n\nThe new 4th codon in DNA is **5'-CGC-3'** (which corresponds to the mRNA codon **5'-GCG-3'**). The codon CGC encodes **Arginine (R)**.\n\nThe resulting truncated peptide sequence (1-letter code) is now:\n\n- M (Methionine)\n- A (Alanine)\n- P (Proline)\n\nThus, the resulting truncated peptide sequence is **MAPR**.",
+          "completion_tokens": 371,
+          "tok_per_sec": 122.22505561872434,
+          "error": null,
+          "score": 0.8333333333333334,
+          "hits": [
+            false,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        }
+      }
+    },
+    {
+      "id": "hard_crispr_prime_editing",
+      "name": "CRISPR Engineering: HBB E6V Transversion & pegRNA Architecture",
+      "models": {
+        "muse_spark": {
+          "success": true,
+          "elapsed": 60.48419499397278,
+          "content": "(1) **Transversion** - purine A -> pyrimidine T (pyrimidine <-> purine).\n\n**CBE:** C:G -> T:A (C->U->T) = transition.\n**ABE:** A:T -> G:C (A->I->G) = transition.\nNeither catalyzes transversion T:A -> A:T. Sickle GAG->GTG requires T->A on coding strand / A->T on non-coding strand, not accessible to deaminase base editors.\n\n(2) **Prime Editing - Prime Editor (PE), PE2/PE3/PE5** - Cas9 H840A nickase - Reverse Transcriptase fusion with pegRNA. Does all 12 base-to-base conversions including T:A to A:T transversion without DSB or exogenous donor template via reverse transcription of edit.\n\n(3) **pegRNA 3' extension =**\na) **Primer Binding Site (PBS)** - hybridizes to nicked 3' DNA flap to prime RT\nb) **Reverse Transcriptase Template (RTT)** - contains desired edit to be reverse transcribed into DNA\n\n**Enzyme fused to nCas9(H840A):** **Engineered Moloney Murine Leukemia Virus Reverse Transcriptase (M-MLV RT)** - pentamutant truncated RT.",
+          "scored_text": "(1) **Transversion** - purine A -> pyrimidine T (pyrimidine <-> purine).\n\n**CBE:** C:G -> T:A (C->U->T) = transition.\n**ABE:** A:T -> G:C (A->I->G) = transition.\nNeither catalyzes transversion T:A -> A:T. Sickle GAG->GTG requires T->A on coding strand / A->T on non-coding strand, not accessible to deaminase base editors.\n\n(2) **Prime Editing - Prime Editor (PE), PE2/PE3/PE5** - Cas9 H840A nickase - Reverse Transcriptase fusion with pegRNA. Does all 12 base-to-base conversions including T:A to A:T transversion without DSB or exogenous donor template via reverse transcription of edit.\n\n(3) **pegRNA 3' extension =**\na) **Primer Binding Site (PBS)** - hybridizes to nicked 3' DNA flap to prime RT\nb) **Reverse Transcriptase Template (RTT)** - contains desired edit to be reverse transcribed into DNA\n\n**Enzyme fused to nCas9(H840A):** **Engineered Moloney Murine Leukemia Virus Reverse Transcriptase (M-MLV RT)** - pentamutant truncated RT.",
+          "completion_tokens": 595,
+          "tok_per_sec": 9.837280632722177,
+          "error": null,
+          "score": 1.0,
+          "hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "luna": {
+          "success": true,
+          "elapsed": 4.155926942825317,
+          "content": "1. **Transversion**: the coding-strand change is **A\u2192T** (complementary **T\u2192A**), i.e., purine\u2194pyrimidine. CBEs mediate **C\u2192T (G\u2192A)**, and ABEs mediate **A\u2192G (T\u2192C)**; neither performs **T\u2192A/A\u2192T**.\n\n2. **Prime editing** directly reverts **T:A\u2192A:T** without a double-strand break or donor DNA template.\n\n3. The pegRNA 3\u2032 extension contains the **primer-binding site (PBS)** and **reverse-transcription template (RTT)**. The Cas9 H840A nickase is fused to a **reverse transcriptase**, typically an engineered **Moloney murine leukemia virus (M-MLV) RT**.",
+          "scored_text": "1. **Transversion**: the coding-strand change is **A\u2192T** (complementary **T\u2192A**), i.e., purine\u2194pyrimidine. CBEs mediate **C\u2192T (G\u2192A)**, and ABEs mediate **A\u2192G (T\u2192C)**; neither performs **T\u2192A/A\u2192T**.\n\n2. **Prime editing** directly reverts **T:A\u2192A:T** without a double-strand break or donor DNA template.\n\n3. The pegRNA 3\u2032 extension contains the **primer-binding site (PBS)** and **reverse-transcription template (RTT)**. The Cas9 H840A nickase is fused to a **reverse transcriptase**, typically an engineered **Moloney murine leukemia virus (M-MLV) RT**.",
+          "completion_tokens": 425,
+          "tok_per_sec": 102.26358784619849,
+          "error": null,
+          "score": 0.8333333333333334,
+          "hits": [
+            true,
+            false,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "gpt4o_mini": {
+          "success": true,
+          "elapsed": 2.2481870651245117,
+          "content": "(1) The sickle-cell mutation is a transversion because it involves a change from a purine (Adenine) to a pyrimidine (Thymine). Neither Cytosine Base Editors (CBE) nor Adenine Base Editors (ABE) can directly revert it because CBEs convert C:G to T:A and ABEs convert A:T to G:C, but the mutation involves a change from A:T to T:A, which does not fit the target conversions of these editors.\n\n(2) The CRISPR editing platform that directly reverts T:A to A:T without double-strand breaks or donor DNA templates is the Prime Editing system.\n\n(3) The two functional sequence elements at the 3' extension of the pegRNA are the primer binding site (PBS) and the reverse transcriptase (RT) template. The enzyme fused to the Cas9 H840A nickase is typically a reverse transcriptase.",
+          "scored_text": "(1) The sickle-cell mutation is a transversion because it involves a change from a purine (Adenine) to a pyrimidine (Thymine). Neither Cytosine Base Editors (CBE) nor Adenine Base Editors (ABE) can directly revert it because CBEs convert C:G to T:A and ABEs convert A:T to G:C, but the mutation involves a change from A:T to T:A, which does not fit the target conversions of these editors.\n\n(2) The CRISPR editing platform that directly reverts T:A to A:T without double-strand breaks or donor DNA templates is the Prime Editing system.\n\n(3) The two functional sequence elements at the 3' extension of the pegRNA are the primer binding site (PBS) and the reverse transcriptase (RT) template. The enzyme fused to the Cas9 H840A nickase is typically a reverse transcriptase.",
+          "completion_tokens": 189,
+          "tok_per_sec": 84.06773748141487,
+          "error": null,
+          "score": 0.6666666666666666,
+          "hits": [
+            true,
+            false,
+            true,
+            true,
+            false,
+            true
+          ]
+        }
+      }
+    },
+    {
+      "id": "hard_hardy_weinberg_bayes",
+      "name": "Quantitative Clinical Genetics: HWE & Bayesian Posterior Carrier Risk",
+      "models": {
+        "muse_spark": {
+          "success": true,
+          "elapsed": 85.52571702003479,
+          "content": "As senior biomedical scientist:\n\n**(1) Hardy-Weinberg: $q^2 = 0.0001$**\n\n* $q = \\sqrt{0.0001} = \\mathbf{0.01 = 1\\%}$ mutant allele frequency\n* $p = 1-q = \\mathbf{0.99 = 99\\%}$ normal allele frequency\n* $2pq = 2 \\times 0.99 \\times 0.01 = \\mathbf{0.0198 = 1.98\\%}$ heterozygote carrier frequency\n\n**(2) Unaffected sibling of affected child, parents obligate carriers $Aa \\times Aa$:**\n\nMendelian ratio: $1/4 AA : 1/2 Aa : 1/4 aa$\n\nConditioned on unaffected ($AA$ or $Aa$):\n\n$P(\\text{carrier} \\mid \\text{unaffected}) = \\frac{1/2}{1/4+1/2} = \\frac{1/2}{3/4} = \\mathbf{2/3 \\approx 0.6667 = 66.67\\%}$\n\n**(3) Posterior after negative test, Sensitivity = 0.90, Specificity = 1.00:**\n\nPrior: $P(C)=2/3$, $P(\\bar{C})=1/3$\n$P(Neg \\mid C)=1-0.90=0.10$, $P(Neg \\mid \\bar{C})=1.00$\n\nBayes:\n\n$P(C \\mid Neg) = \\frac{P(Neg\\mid C)P(C)}{P(Neg\\mid C)P(C)+P(Neg\\mid \\bar{C})P(\\bar{C})}$\n\n$= \\frac{0.10 \\times 2/3}{0.10 \\times 2/3 + 1.00 \\times 1/3} = \\frac{0.0666...}{0.0666...+0.3333...} = \\frac{0.2}{1.2}$\n\n$= \\mathbf{1/6 \\approx 0.1667 = 16.67\\%}$",
+          "scored_text": "As senior biomedical scientist:\n\n**(1) Hardy-Weinberg: $q^2 = 0.0001$**\n\n* $q = \\sqrt{0.0001} = \\mathbf{0.01 = 1\\%}$ mutant allele frequency\n* $p = 1-q = \\mathbf{0.99 = 99\\%}$ normal allele frequency\n* $2pq = 2 \\times 0.99 \\times 0.01 = \\mathbf{0.0198 = 1.98\\%}$ heterozygote carrier frequency\n\n**(2) Unaffected sibling of affected child, parents obligate carriers $Aa \\times Aa$:**\n\nMendelian ratio: $1/4 AA : 1/2 Aa : 1/4 aa$\n\nConditioned on unaffected ($AA$ or $Aa$):\n\n$P(\\text{carrier} \\mid \\text{unaffected}) = \\frac{1/2}{1/4+1/2} = \\frac{1/2}{3/4} = \\mathbf{2/3 \\approx 0.6667 = 66.67\\%}$\n\n**(3) Posterior after negative test, Sensitivity = 0.90, Specificity = 1.00:**\n\nPrior: $P(C)=2/3$, $P(\\bar{C})=1/3$\n$P(Neg \\mid C)=1-0.90=0.10$, $P(Neg \\mid \\bar{C})=1.00$\n\nBayes:\n\n$P(C \\mid Neg) = \\frac{P(Neg\\mid C)P(C)}{P(Neg\\mid C)P(C)+P(Neg\\mid \\bar{C})P(\\bar{C})}$\n\n$= \\frac{0.10 \\times 2/3}{0.10 \\times 2/3 + 1.00 \\times 1/3} = \\frac{0.0666...}{0.0666...+0.3333...} = \\frac{0.2}{1.2}$\n\n$= \\mathbf{1/6 \\approx 0.1667 = 16.67\\%}$",
+          "completion_tokens": 836,
+          "tok_per_sec": 9.774837664373667,
+          "error": null,
+          "score": 1.0,
+          "hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "luna": {
+          "success": true,
+          "elapsed": 3.949347972869873,
+          "content": "1. \\(q=\\sqrt{0.0001}=0.01\\); \\(p=1-q=0.99\\).  \n   \\[\n   2pq=2(0.99)(0.01)=0.0198=1.98\\%\n   \\]\n\n2. Conditional on being unaffected:\n   \\[\n   P(\\text{carrier}\\mid\\text{unaffected})=\\frac{1/2}{3/4}=\\frac{2}{3}\n   \\]\n\n3. A negative test has \\(P(-\\mid\\text{carrier})=0.10\\) and \\(P(-\\mid\\text{noncarrier})=1\\):\n   \\[\n   P(\\text{carrier}\\mid -)\n   =\\frac{(0.10)(2/3)}{(0.10)(2/3)+(1)(1/3)}\n   =\\frac{1}{6}\n   =16.67\\%\n   \\]",
+          "scored_text": "1. \\(q=\\sqrt{0.0001}=0.01\\); \\(p=1-q=0.99\\).  \n   \\[\n   2pq=2(0.99)(0.01)=0.0198=1.98\\%\n   \\]\n\n2. Conditional on being unaffected:\n   \\[\n   P(\\text{carrier}\\mid\\text{unaffected})=\\frac{1/2}{3/4}=\\frac{2}{3}\n   \\]\n\n3. A negative test has \\(P(-\\mid\\text{carrier})=0.10\\) and \\(P(-\\mid\\text{noncarrier})=1\\):\n   \\[\n   P(\\text{carrier}\\mid -)\n   =\\frac{(0.10)(2/3)}{(0.10)(2/3)+(1)(1/3)}\n   =\\frac{1}{6}\n   =16.67\\%\n   \\]",
+          "completion_tokens": 424,
+          "tok_per_sec": 107.35949400070004,
+          "error": null,
+          "score": 1.0,
+          "hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        "gpt4o_mini": {
+          "success": true,
+          "elapsed": 5.914675951004028,
+          "content": "(1) Given that the incidence of the disease is 1 in 10,000, we have:\n\n- \\( q^2 = 0.0001 \\)\n- To find \\( q \\): \n  \\[\n  q = \\sqrt{0.0001} = 0.01\n  \\]\n- To find \\( p \\) (normal allele frequency):\n  \\[\n  p = 1 - q = 1 - 0.01 = 0.99\n  \\]\n- To find the heterozygote carrier frequency \\( 2pq \\):\n  \\[\n  2pq = 2 \\times 0.99 \\times 0.01 = 0.0198\n  \\]\n  As a percentage:\n  \\[\n  2pq \\times 100 = 1.98\\%\n  \\]\n\nSo, the results are:\n- \\( q = 0.01 \\)\n- \\( p = 0.99 \\)\n- \\( 2pq = 0.0198 \\) (1.98%)\n\n(2) For an unaffected sibling of an affected child born to two obligate carrier parents, the Mendelian probability of being a carrier is:\n- Since both parents are carriers (genotype Aa), the possible genotypes for their children are:\n  - AA (normal) \n  - Aa (carrier)\n  - aa (affected)\n- The probabilities are:\n  - 1/4 AA\n  - 1/2 Aa (carrier)\n  - 1/4 aa (affected)\n- Therefore, the prior probability of being a carrier (Aa) is:\n  \\[\n  P(\\text{carrier}) = \\frac{1}{2}\n  \\]\n\n(3) If the unaffected sibling tests negative on a genetic panel with 90% sensitivity and 100% specificity, we need to calculate the posterior probability that the sibling is still a carrier.\n\nLet:\n- \\( C \\) = carrier\n- \\( N \\) = negative test result\n\nUsing Bayes' theorem:\n\\[\nP(C | N) = \\frac{P(N | C) \\cdot P(C)}{P(N)}\n\\]\n\nWhere:\n- \\( P(C) = \\frac{1}{2} \\)\n- \\( P(N | C) = 0.10 \\) (false negative rate, since sensitivity is 90%)\n- \\( P(N | \\text{not } C) = 1 \\) (specificity is 100%)\n- \\( P(\\text{not } C) = \\frac{1}{2} \\)\n\nNow, we calculate \\( P(N) \\):\n\\[\nP(N) = P(N | C) \\cdot P(C) + P(N | \\text{not } C) \\cdot P(\\text{not } C)\n\\]\n\\[\nP(N) = (0.10 \\cdot \\frac{1}{2}) + (1 \\cdot \\frac{1}{2}) = 0.05 + 0.50 = 0.55\n\\]\n\nNow substituting back into Bayes' theorem:\n\\[\nP(C | N) = \\frac{0.10 \\cdot \\frac{1}{2}}{0.55} = \\frac{0.05}{0.55} = \\frac{5}{55} = \\frac{1}{11}\n\\]\n\nAs a percentage:\n\\[\nP(C | N) \\approx 0.0909 \\text{ or } 9.09\\%\n\\]\n\nFinal results:\n- (1) \\( q = 0.01 \\), \\( p = 0.99 \\), \\( 2pq = 0.0198 \\) (1.98%)\n- (2) Prior probability of being a carrier: \\( \\frac{1}{2} \\)\n- (3) Posterior probability of being a carrier: \\( \\frac{1}{11} \\) (9.09%)",
+          "scored_text": "(1) Given that the incidence of the disease is 1 in 10,000, we have:\n\n- \\( q^2 = 0.0001 \\)\n- To find \\( q \\): \n  \\[\n  q = \\sqrt{0.0001} = 0.01\n  \\]\n- To find \\( p \\) (normal allele frequency):\n  \\[\n  p = 1 - q = 1 - 0.01 = 0.99\n  \\]\n- To find the heterozygote carrier frequency \\( 2pq \\):\n  \\[\n  2pq = 2 \\times 0.99 \\times 0.01 = 0.0198\n  \\]\n  As a percentage:\n  \\[\n  2pq \\times 100 = 1.98\\%\n  \\]\n\nSo, the results are:\n- \\( q = 0.01 \\)\n- \\( p = 0.99 \\)\n- \\( 2pq = 0.0198 \\) (1.98%)\n\n(2) For an unaffected sibling of an affected child born to two obligate carrier parents, the Mendelian probability of being a carrier is:\n- Since both parents are carriers (genotype Aa), the possible genotypes for their children are:\n  - AA (normal) \n  - Aa (carrier)\n  - aa (affected)\n- The probabilities are:\n  - 1/4 AA\n  - 1/2 Aa (carrier)\n  - 1/4 aa (affected)\n- Therefore, the prior probability of being a carrier (Aa) is:\n  \\[\n  P(\\text{carrier}) = \\frac{1}{2}\n  \\]\n\n(3) If the unaffected sibling tests negative on a genetic panel with 90% sensitivity and 100% specificity, we need to calculate the posterior probability that the sibling is still a carrier.\n\nLet:\n- \\( C \\) = carrier\n- \\( N \\) = negative test result\n\nUsing Bayes' theorem:\n\\[\nP(C | N) = \\frac{P(N | C) \\cdot P(C)}{P(N)}\n\\]\n\nWhere:\n- \\( P(C) = \\frac{1}{2} \\)\n- \\( P(N | C) = 0.10 \\) (false negative rate, since sensitivity is 90%)\n- \\( P(N | \\text{not } C) = 1 \\) (specificity is 100%)\n- \\( P(\\text{not } C) = \\frac{1}{2} \\)\n\nNow, we calculate \\( P(N) \\):\n\\[\nP(N) = P(N | C) \\cdot P(C) + P(N | \\text{not } C) \\cdot P(\\text{not } C)\n\\]\n\\[\nP(N) = (0.10 \\cdot \\frac{1}{2}) + (1 \\cdot \\frac{1}{2}) = 0.05 + 0.50 = 0.55\n\\]\n\nNow substituting back into Bayes' theorem:\n\\[\nP(C | N) = \\frac{0.10 \\cdot \\frac{1}{2}}{0.55} = \\frac{0.05}{0.55} = \\frac{5}{55} = \\frac{1}{11}\n\\]\n\nAs a percentage:\n\\[\nP(C | N) \\approx 0.0909 \\text{ or } 9.09\\%\n\\]\n\nFinal results:\n- (1) \\( q = 0.01 \\), \\( p = 0.99 \\), \\( 2pq = 0.0198 \\) (1.98%)\n- (2) Prior probability of being a carrier: \\( \\frac{1}{2} \\)\n- (3) Posterior probability of being a carrier: \\( \\frac{1}{11} \\) (9.09%)",
+          "completion_tokens": 831,
+          "tok_per_sec": 140.4979760317953,
+          "error": null,
+          "score": 0.5,
+          "hits": [
+            true,
+            true,
+            true,
+            false,
+            false,
+            false
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -111,3 +111,33 @@ export GLIMMER_30B_BACKEND=http://xxx.xx.xx.xx/v1
 export GLIMMER_30B_MODEL=Muse-Glimmer-30B
 python benchmark_glimmer_vs_luna.py --models glimmer_30b,luna --phase agent
 ```
+
+---
+
+## 6. Scaling to `Muse-Spark-Open-816B-A42B` & Hard Biomedical Reasoning Suite (Ligase v0.3.0)
+
+Because the original 5-task suite was near ceiling (90–95%) on smaller checkpoints (`Gemma4-12B-v2`, `Muse-Glimmer-30B`, `gpt-5.6-luna`), we evaluated **`meta-models/Muse-Spark-Open-816B-A42B`** (816B total / 42B active MoE, GGUF IQ2_S 2.5 bpw on private H100 `llama-server`) on:
+1. **Standard 5-Task Suite** (Raw + Agent)
+2. **6-Task Hard Biomedical Reasoning Suite** (36 strict clinical/molecular rubric items across 6 tasks)
+
+### 6.1 Standard 5-Task Suite: First 100% / 100% Score
+
+| Model | Params (Total / Active) | Raw Accuracy | Agent Accuracy | Missed Items on Standard Suite |
+| :--- | :--- | ---: | ---: | :--- |
+| **Muse-Spark-Open-816B-A42B** | 816B / 42B MoE | **100.0%** | **100.0%** | **None (20/20 keywords in both Raw & Agent)** |
+| `Muse-Glimmer-30B` | 30B / 3B MoE | 88.3% | 95.0% | Missed `peptide`/`protein` distinction on DNA task (75%) |
+| `gpt-5.6-luna` | Frontier API | 90.0% | 90.0% | Missed Imatinib formula token (75%) and DNA `peptide`/`protein` (75%) |
+| `Gemma4-12B-v2-Q4_K_M` | 12B dense | 80.0% | 83.3% (95.0% w/ loop cap) | Raw invented peptide `MAS` and wrong formula `C29H30N7O`; Agent missed `O` (`C29H31N7`) and `Cas13` |
+
+### 6.2 Hard Biomedical Reasoning Benchmark (6 Tasks, 36 Strict Rubric Items)
+
+| Hard Task | Strict Verification Rubric (6 items/task) | **Muse-Spark-816B-A42B** | `gpt-5.6-luna` | `gpt-4o-mini` (Small Baseline) |
+| :--- | :--- | :---: | :---: | :---: |
+| **1. Pharmacogenomics**: `CYP2C19*2/*3` & Clopidogrel PCI | Poor metabolizer, LoF/no-function alleles, prodrug, active thiol metabolite (`R-130964`), prasugrel, ticagrelor | **6/6 (100%)** | 6/6 (100%) | 5/6 (83%) |
+| **2. Structural Oncology**: `BCR-ABL1 T315I` Gatekeeper & STAMP | Lost Thr315 H-bond, Ile315 steric clash, ATP pocket, ponatinib (3rd-gen), asciminib (STAMP), myristoyl pocket | **6/6 (100%)** | 6/6 (100%) | 6/6 (100%) |
+| **3. AD Protective Epistasis**: `APOE3 Christchurch` & `RELN-COLBOS` | `R136S` (`Arg136Ser`), `H3447R` (`His3447Arg`), HSPG / heparan sulfate, Dab1 adaptor, GSK3β, tau phosphorylation | **6/6 (100%)** | 0/6 (0%)* | 4/6 (67%)** |
+| **4. Coding Frameshift Math**: `c.10delC` in `ATGGCCCTGCTGAACCGCTAA` | WT 6-aa `MALLNR`, new 4th DNA codon `TGA`, mRNA `UGA`, premature stop, codon 4 position, truncated 3-aa `MAL` | **6/6 (100%)** | 6/6 (100%) | 5/6 (83%)*** |
+| **5. CRISPR Prime Editing**: Sickle-Cell `HBB E6V` (`A:T→T:A`) | Transversion, CBE/ABE transition limit, Prime Editing, pegRNA PBS, pegRNA RTT, engineered M-MLV reverse transcriptase | **6/6 (100%)** | 5/6 (83%) | 4/6 (67%) |
+| **6. Quantitative Clinical Genetics**: HWE ($q^2=10^{-4}$) & Bayesian Carrier Risk | $q=0.01$, $p=0.99$, $2pq=0.0198$ ($1.98\%$), unaffected sibling prior $2/3$, posterior fraction $1/6$, posterior $16.67\%$ | **6/6 (100%)** | 6/6 (100%) | 3/6 (50%)**** |
+| **Aggregate Strict Rubric Score** | **36 / 36 items across 6 tasks** | **36/36 (100.0%)** | **29/36 (80.6%)** | **27/36 (75.0%)** |
+
